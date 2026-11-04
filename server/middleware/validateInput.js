@@ -3,6 +3,7 @@ const DIETS = ['any', 'vegetarian', 'vegan', 'gluten-free', 'keto'];
 // Strips characters that could be used to break out of the prompt template.
 const clean = (s) => s.replace(/[<>{}`$\\\u0000-\u001f]/g, ' ').replace(/\s+/g, ' ').trim();
 
+// Sanitizes and validates ingredient lists from both Home and Explore search bars
 export default function validateInput(req, res, next) {
   const { ingredients, diet = 'any', servings = 2 } = req.body || {};
   const fail = (msg) => res.status(400).json({ success: false, error: msg });

@@ -19,7 +19,7 @@ Enter the ingredients you have, pick a dietary preference and serving size, and 
 |---|---|
 | Frontend | React 18, Vite, plain CSS (hooks and Context, no state library) |
 | Backend | Node.js 18+, Express |
-| LLM | OpenAI, Gemini or Anthropic (your choice), or `mock` for keyless demos |
+| LLM | Groq, OpenAI, Gemini or Anthropic (your choice), or `mock` for keyless demos |
 | Images | Unsplash or Pexels (free tier) |
 | Caching / limits | `node-cache`, `express-rate-limit` |
 | Persistence | Browser `localStorage` only (no database) |
@@ -71,7 +71,7 @@ The Vite dev server forwards `/api` requests to `http://localhost:5000`, so no C
 ### 3. Use real AI recipes and photos
 Edit `server/.env`:
 ```env
-LLM_PROVIDER=openai          # openai | gemini | anthropic
+LLM_PROVIDER=groq            # groq | openai | gemini | anthropic
 LLM_API_KEY=your-key-here
 IMAGE_PROVIDER=unsplash      # unsplash | pexels
 IMAGE_API_KEY=your-image-key
@@ -86,9 +86,9 @@ Restart the server after changing `.env`.
 |---|---|---|
 | `PORT` | `5000` | Port the API listens on |
 | `CLIENT_ORIGIN` | `http://localhost:5173` | Allowed frontend origin(s) for CORS, comma-separated |
-| `LLM_PROVIDER` | `mock` | `openai`, `gemini`, `anthropic` or `mock` |
+| `LLM_PROVIDER` | `mock` | `groq`, `openai`, `gemini`, `anthropic` or `mock` |
 | `LLM_API_KEY` | none | Key for the chosen provider (server-side only) |
-| `LLM_MODEL` | provider default | Optional override (defaults: `gpt-4o-mini`, `gemini-2.0-flash`, `claude-sonnet-4-6`) |
+| `LLM_MODEL` | provider default | Optional override (defaults: `openai/gpt-oss-120b`, `gpt-4o-mini`, `gemini-2.0-flash`, `claude-sonnet-4-6`) |
 | `LLM_TIMEOUT_MS` | `30000` | Timeout for LLM calls |
 | `IMAGE_PROVIDER` | `none` | `unsplash`, `pexels` or `none` |
 | `IMAGE_API_KEY` | none | Image API key (server-side only) |

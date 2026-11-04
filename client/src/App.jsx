@@ -4,6 +4,7 @@ import useRecipeApi from './hooks/useRecipeApi';
 import Header from './components/Header';
 import IngredientForm from './components/IngredientForm';
 import ExploreHero from './components/ExploreHero';
+import FavoritesHero from './components/FavoritesHero';
 import RecipeCard from './components/RecipeCard';
 import RecipeDetails from './components/RecipeDetails';
 import { Empty, Loading, ErrorState } from './components/States';
@@ -127,26 +128,18 @@ export default function App() {
 
         {/* 3. Favorites View */}
         {view === 'favorites' && (
-          <section aria-labelledby="ft">
-            <div className="head">
-              <div>
-                <h2 id="ft">
-                  <span className="red">♥</span> Your Favorite Recipes
-                </h2>
-                <p className="muted">
-                  Recipes you've saved will appear here. You can remove them anytime.
-                </p>
-              </div>
-            </div>
+          <section aria-label="Favorite Recipes">
+            <FavoritesHero count={favs.length} />
             {!favs.length ? (
               <Empty
-                title="No favorites yet"
-                text="Tap the heart on any recipe to save it here."
+                icon="❤️"
+                title="No Favorite Recipes Yet"
+                text="Save recipes you love and they will appear here."
                 action="Explore Recipes"
                 onAction={() => setView('results')}
               />
             ) : (
-              <div className="explore-grid">
+              <div className="fav-grid">
                 {favs.map((r) => (
                   <RecipeCard
                     key={keyOf(r)}

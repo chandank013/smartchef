@@ -4,14 +4,19 @@ Enter the ingredients you have, pick a dietary preference and serving size, and 
 
 ## Features
 
-- Ingredient input (max 200 characters), dietary filter (Any, Vegetarian, Vegan, Gluten-Free, Keto) and servings (1 to 8)
-- Recipe cards with photo, cooking time, calories, dietary label and key ingredients
-- Recipe details view with full ingredient quantities and numbered steps
-- Save and remove favorites, plus the five most recent searches (stored in `localStorage`)
-- Light and dark theme, responsive layout for desktop, tablet and mobile
-- Designed empty, loading, error and image-fallback states, with a Retry action
-- Secure backend proxy: LLM and image API keys never reach the browser
-- In-memory response cache and per-IP rate limiting to control API cost
+- **Explore & Recipe Discovery**:
+  - Hero section with "EXPLORE RECIPES" badge and rich food artwork.
+  - Wide search and multi-attribute filter bar (search keywords, dietary restrictions, cooking time limits, and calorie caps).
+  - Category pill filters (*All Recipes, Popular, Quick & Easy, Healthy, Veg, Non-Veg*).
+  - Multi-attribute sort selector (*Most Relevant, Quickest, Lowest Calories, Highest Calories*).
+  - Responsive 4-column recipe cards with food photography, calorie/prep-time badges, ingredient icons, and dual action buttons (*View Recipe* & *Save*).
+- **Ingredient AI Generator**: Ingredient input (max 200 characters), dietary filter (Any, Vegetarian, Vegan, Gluten-Free, Keto) and servings (1 to 8).
+- **Recipe Details Modal**: Full ingredient quantities scaled by serving size and numbered step-by-step instructions.
+- **Client Persistence**: Save and remove favorites, plus the five most recent searches (stored in `localStorage`).
+- **Responsive Theme System**: Dark forest green and warm light themes with smooth transitions across mobile, tablet, and desktop.
+- **Resilient States**: Designed empty, loading (skeleton screens), error states with retry, and image-fallback states.
+- **Secure Backend Proxy**: LLM (Groq, OpenAI, Gemini, Anthropic) and image API keys never reach the browser.
+- **Caching & Rate Limiting**: In-memory response cache (SHA-256) and per-IP rate limiting to control API cost.
 
 ## Tech stack
 

@@ -3,7 +3,12 @@ export class HttpError extends Error {
 }
 
 const TIMEOUT = Number(process.env.LLM_TIMEOUT_MS) || 30000;
-const DEFAULT_MODELS = { openai: 'gpt-4o-mini', gemini: 'gemini-2.0-flash', anthropic: 'claude-sonnet-4-6' };
+const DEFAULT_MODELS = {
+  openai: 'gpt-4o-mini',
+  gemini: 'gemini-2.0-flash',
+  anthropic: 'claude-sonnet-4-6',
+  groq: 'openai/gpt-oss-120b',
+};
 
 export function buildPrompt({ ingredients, diet, servings }) {
   return `You are a recipe assistant. Given these ingredients: ${ingredients.join(', ')},
@@ -33,6 +38,11 @@ async function post(url, headers, body) {
 }
 
 const callers = {
+  async groq(prompt, key, model) {
+    const d = await post('https://api.groq.com/openai/v1/chat/completions', { Authorization: `Bearer ${key}` },
+      { model, messages: [{ role: 'user', content: prompt }], response_format: { type: 'json_object' }, temperature: 0.7 });
+    return d.choices?.[0]?.message?.content;
+  },
   async openai(prompt, key, model) {
     const d = await post('https://api.openai.com/v1/chat/completions', { Authorization: `Bearer ${key}` },
       { model, messages: [{ role: 'user', content: prompt }], response_format: { type: 'json_object' }, temperature: 0.7 });

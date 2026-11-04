@@ -39,8 +39,9 @@ smartchef/
 │   ├── .env.example
 │   └── src/
 │       ├── main.jsx, App.jsx, lib.js, styles.css
-│       ├── components/        # Header, IngredientForm, RecipeCard,
-│       │                      # RecipeDetails, FoodImage, States
+│       ├── components/        # Header, IngredientForm, ExploreHero,
+│       │                      # FavoritesHero, RecipeCard, RecipeDetails,
+│       │                      # FoodImage, States
 │       ├── hooks/             # useLocalStorage, useRecipeApi
 │       └── context/           # ThemeContext
 └── server/                    # Express API

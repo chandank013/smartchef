@@ -1584,51 +1584,209 @@ h1 em {
   color: var(--red);
 }
 
-/* ─── Kitchen Print Stylesheet ─── */
+/* ─── Vision Fridge Scanner & Smart Filters ─── */
+.field-lbl-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.btn-fridge-scan {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(242, 139, 53, 0.12);
+  border: 1.5px solid var(--o);
+  color: var(--o);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-fridge-scan:hover {
+  background: var(--o);
+  color: #fff;
+}
+.btn-fridge-scan.scanning {
+  opacity: 0.7;
+  animation: pulse 1.2s infinite;
+  cursor: wait;
+}
+.scan-toast {
+  background: rgba(47, 139, 91, 0.15);
+  border: 1px solid var(--g);
+  color: var(--accent-g);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 8px 0;
+}
+.smart-filters-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+  padding: 12px 14px;
+  background: var(--card-sub);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.smart-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.lbl-smart {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mut);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  min-width: 105px;
+}
+.smart-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.smart-chip {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.smart-chip:hover {
+  border-color: var(--accent-g);
+  color: var(--accent-g);
+}
+.smart-chip.active {
+  background: var(--g);
+  border-color: var(--g);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* ─── Kitchen Print Stylesheet (Clean Recipe Sheet) ─── */
 @media print {
   body {
     background: #FFFFFF !important;
     color: #111111 !important;
   }
-  .header, .fav-hero, .explore-hero, .explore-grid, .fav-grid,
-  .hero, .scrim, .btn, .modal-utility-actions, .close,
-  .grocery-add-wrap, .heart-btn, .burger, .switch,
-  .cook-mode-overlay, .grocery-scrim {
+  /* Hide page navigation, hero, background main, and action controls */
+  .header,
+  .hero,
+  .fav-hero,
+  .explore-hero,
+  .explore-grid,
+  .fav-grid,
+  .recent,
+  main,
+  .btn,
+  .modal-utility-actions,
+  .close,
+  .grocery-add-wrap,
+  .modal-footer-action,
+  .heart-btn,
+  .burger,
+  .switch,
+  .cook-mode-overlay,
+  .grocery-scrim {
     display: none !important;
   }
-  .modal {
+
+  /* Make sure modal container is visible and cleanly laid out */
+  .scrim {
+    display: block !important;
     position: static !important;
-    max-width: 100% !important;
-    box-shadow: none !important;
-    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    backdrop-filter: none !important;
+    inset: auto !important;
+  }
+
+  .modal,
+  .recipe-detail-modal {
+    position: static !important;
     display: block !important;
     background: #FFFFFF !important;
     color: #111111 !important;
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
+
+  .modal-body {
+    padding: 0 !important;
+  }
+
   .modal-img {
-    height: 200px !important;
-    object-fit: cover;
-  }
-  .modal h2 {
-    color: #000000 !important;
-    font-size: 26pt !important;
-  }
-  .meta, .card-macros, .macros-bar {
-    color: #333333 !important;
-  }
-  .two {
+    height: 220px !important;
+    max-width: 380px !important;
+    border-radius: 8px !important;
+    object-fit: cover !important;
+    margin-bottom: 12pt !important;
     display: block !important;
   }
-  .ings li {
-    border-bottom: 1px solid #CCCCCC !important;
+
+  .modal h2,
+  .modal-title {
+    color: #000000 !important;
+    font-size: 24pt !important;
+    margin-bottom: 6pt !important;
+    line-height: 1.2 !important;
+  }
+
+  .meta,
+  .macros-bar,
+  .macro-chip {
+    color: #444444 !important;
+    background: #F4F4F4 !important;
+    border-color: #DDDDDD !important;
+  }
+
+  .macro-val {
     color: #111111 !important;
   }
+
+  .two {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20pt !important;
+    margin-top: 14pt !important;
+  }
+
+  .ings li {
+    border-bottom: 1px solid #DDDDDD !important;
+    color: #111111 !important;
+    padding: 4pt 0 !important;
+  }
+
+  .checklist-item input[type="checkbox"] {
+    display: none !important;
+  }
+
   .steps li {
     color: #111111 !important;
-    margin-bottom: 10pt !important;
+    margin-bottom: 8pt !important;
+    page-break-inside: avoid !important;
   }
+
   .steps li:before {
-    background: #333333 !important;
+    background: #222222 !important;
     color: #FFFFFF !important;
   }
 }

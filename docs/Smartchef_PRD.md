@@ -4,6 +4,8 @@
 **Version:** 3.0 (Production Release — Vision AI, Interactive Cook Mode & Cloud Deployment)  
 **Author:** SmartChef Team  
 **Date:** November 2026  
+**Live Demo:** [https://smartchef-eta.vercel.app/](https://smartchef-eta.vercel.app/)  
+**Backend API:** [https://smartchef-ptvv.onrender.com](https://smartchef-ptvv.onrender.com)  
 
 ---
 

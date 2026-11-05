@@ -964,3 +964,671 @@ h1 em {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ─── Header Actions & Grocery Button ─── */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-grocery-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card-sub);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.btn-grocery-toggle:hover {
+  border-color: var(--accent-g);
+  color: var(--accent-g);
+}
+.cart-ico { font-size: 15px; }
+.grocery-badge {
+  background: var(--o);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* ─── Card Macros ─── */
+.card-macros {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--mut);
+  background: var(--card-sub);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 8px;
+  margin: 2px 0;
+  font-weight: 500;
+}
+.macro-dot { color: var(--line); }
+
+/* ─── Modal Recipe Details Enhancements ─── */
+.macros-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 14px 0 16px;
+}
+.macro-chip {
+  background: var(--card-sub);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.macro-icon { font-size: 16px; }
+.macro-label { color: var(--mut); font-size: 12px; }
+.macro-val { margin-left: auto; color: var(--ink); font-weight: 700; }
+.macro-p { border-color: rgba(242, 139, 53, 0.3); }
+.macro-c { border-color: rgba(69, 183, 122, 0.3); }
+.macro-f { border-color: rgba(47, 139, 91, 0.3); }
+
+.modal-utility-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.btn-cook-mode {
+  background: linear-gradient(135deg, var(--g), var(--accent-g));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(47, 139, 91, 0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-cook-mode:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(47, 139, 91, 0.45);
+}
+.btn-util {
+  background: var(--card-sub);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-util:hover {
+  border-color: var(--accent-g);
+  color: var(--accent-g);
+}
+
+.ings-sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.ings-hint {
+  font-size: 11.5px;
+  color: var(--o);
+  font-weight: 600;
+}
+.checklist-ings {
+  margin-top: 8px;
+}
+.checklist-item {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+  border-radius: 6px;
+  padding: 6px 8px !important;
+}
+.checklist-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+.checklist-item.selected-missing {
+  background: rgba(242, 139, 53, 0.1);
+}
+.checklist-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--o);
+  cursor: pointer;
+}
+.grocery-add-wrap {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-add-grocery {
+  background: var(--card-sub);
+  border: 1px solid var(--o);
+  color: var(--o);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-add-grocery:hover:not(:disabled) {
+  background: var(--o);
+  color: #fff;
+}
+.btn-add-grocery:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: var(--line);
+  color: var(--mut);
+}
+.grocery-toast {
+  color: var(--accent-g);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.modal-footer-action {
+  margin-top: 16px;
+}
+
+/* ─── Fullscreen Cook Mode ─── */
+.cook-mode-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0B120E;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.cook-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  background: #101A14;
+  border-bottom: 1px solid var(--line);
+}
+.cook-mode-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cook-chef-icon {
+  font-size: 32px;
+}
+.cook-recipe-title {
+  font-size: 20px;
+  color: var(--ink);
+  margin: 0;
+}
+.cook-mode-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--mut);
+  margin-top: 2px;
+}
+.cook-mode-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cook-step-pill {
+  background: rgba(69, 183, 122, 0.15);
+  color: var(--accent-g);
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--g);
+}
+.cook-close-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--mut);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.cook-close-btn:hover {
+  color: var(--ink);
+  border-color: var(--mut);
+}
+.cook-progress-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  width: 100%;
+}
+.cook-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--g), var(--accent-g));
+  transition: width 0.3s ease;
+}
+.cook-mode-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+.cook-step-card {
+  width: 100%;
+  background: #142019;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 44px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+.cook-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.cook-step-number {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--o);
+}
+.cook-voice-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cook-voice-btn.speaking {
+  background: rgba(69, 183, 122, 0.2);
+  border-color: var(--accent-g);
+  color: var(--accent-g);
+}
+.cook-step-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 28px;
+}
+.cook-timer-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1A2820;
+  border: 1.5px solid var(--g);
+  border-radius: 14px;
+  padding: 16px 22px;
+  margin-top: 16px;
+}
+.cook-timer-box.finished {
+  border-color: var(--o);
+  animation: pulse 1s infinite;
+}
+.cook-timer-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cook-timer-icon {
+  font-size: 28px;
+}
+.cook-timer-label {
+  font-size: 12px;
+  color: var(--mut);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.cook-timer-display {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.cook-timer-actions {
+  display: flex;
+  gap: 10px;
+}
+.btn-timer-toggle {
+  background: var(--g);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-timer-toggle:hover {
+  background: var(--accent-g);
+}
+.btn-timer-reset {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--mut);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.btn-timer-reset:hover {
+  color: var(--ink);
+}
+.cook-mode-footer {
+  padding: 18px 28px;
+  background: #101A14;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cook-nav-btn {
+  background: var(--card-sub);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cook-nav-btn:hover:not(:disabled) {
+  border-color: var(--accent-g);
+  color: var(--accent-g);
+}
+.cook-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.cook-nav-btn.next {
+  background: var(--g);
+  color: #fff;
+  border-color: var(--g);
+}
+.cook-nav-btn.next:hover {
+  background: var(--accent-g);
+}
+.cook-nav-btn.finish {
+  background: var(--o);
+  color: #fff;
+  border-color: var(--o);
+}
+.cook-dots {
+  display: flex;
+  gap: 8px;
+}
+.cook-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s;
+}
+.cook-dot.active {
+  background: var(--accent-g);
+  transform: scale(1.25);
+}
+.cook-dot.done {
+  background: var(--g);
+}
+
+/* ─── Smart Grocery Drawer ─── */
+.grocery-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 60;
+  display: flex;
+  justify-content: flex-end;
+  backdrop-filter: blur(3px);
+}
+.grocery-drawer {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background: var(--card);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.45);
+  animation: slideInRight 0.25s ease;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.grocery-header {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.grocery-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.grocery-cart-icon {
+  font-size: 26px;
+}
+.grocery-title {
+  font-size: 20px;
+  margin: 0;
+  color: var(--ink);
+}
+.grocery-sub {
+  font-size: 12.5px;
+  color: var(--mut);
+  margin: 2px 0 0;
+}
+.grocery-close-btn {
+  background: none;
+  border: none;
+  color: var(--mut);
+  font-size: 20px;
+  cursor: pointer;
+}
+.grocery-close-btn:hover { color: var(--ink); }
+.grocery-actions-bar {
+  padding: 12px 22px;
+  display: flex;
+  gap: 10px;
+  background: var(--card-sub);
+  border-bottom: 1px solid var(--line);
+}
+.btn-grocery-wa {
+  flex: 1;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.btn-grocery-wa:hover {
+  background: #1EBE5D;
+}
+.btn-grocery-clear {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--mut);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.btn-grocery-clear:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+.grocery-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 22px;
+}
+.grocery-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--mut);
+}
+.grocery-empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+.grocery-empty h3 {
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.grocery-empty p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.grocery-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.grocery-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.15s;
+}
+.grocery-item.checked {
+  opacity: 0.5;
+}
+.grocery-item.checked .grocery-item-name {
+  text-decoration: line-through;
+}
+.grocery-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex: 1;
+}
+.grocery-checkbox-label input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-g);
+  cursor: pointer;
+}
+.grocery-item-details {
+  display: flex;
+  flex-direction: column;
+}
+.grocery-item-name {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.grocery-item-qty {
+  font-size: 12px;
+  color: var(--mut);
+}
+.grocery-item-recipe {
+  font-size: 11px;
+  color: var(--accent-g);
+}
+.grocery-item-del {
+  background: none;
+  border: none;
+  color: var(--mut);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+}
+.grocery-item-del:hover {
+  color: var(--red);
+}
+
+/* ─── Kitchen Print Stylesheet ─── */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #111111 !important;
+  }
+  .header, .fav-hero, .explore-hero, .explore-grid, .fav-grid,
+  .hero, .scrim, .btn, .modal-utility-actions, .close,
+  .grocery-add-wrap, .heart-btn, .burger, .switch,
+  .cook-mode-overlay, .grocery-scrim {
+    display: none !important;
+  }
+  .modal {
+    position: static !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    display: block !important;
+    background: #FFFFFF !important;
+    color: #111111 !important;
+  }
+  .modal-img {
+    height: 200px !important;
+    object-fit: cover;
+  }
+  .modal h2 {
+    color: #000000 !important;
+    font-size: 26pt !important;
+  }
+  .meta, .card-macros, .macros-bar {
+    color: #333333 !important;
+  }
+  .two {
+    display: block !important;
+  }
+  .ings li {
+    border-bottom: 1px solid #CCCCCC !important;
+    color: #111111 !important;
+  }
+  .steps li {
+    color: #111111 !important;
+    margin-bottom: 10pt !important;
+  }
+  .steps li:before {
+    background: #333333 !important;
+    color: #FFFFFF !important;
+  }
+}

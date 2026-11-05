@@ -25,6 +25,11 @@ export default function RecipeCard({ recipe, diet, saved, mode = 'explore', onTo
   const ings = recipe.ingredients || [];
   const d = dietLabel(diet);
   const desc = recipe.description || `Made with ${ings.slice(0, 3).map((i) => i.name.toLowerCase()).join(', ')}.`;
+  const macros = recipe.macros || (recipe.calories ? {
+    protein: `${Math.round(recipe.calories * 0.05)}g`,
+    carbs: `${Math.round(recipe.calories * 0.12)}g`,
+    fats: `${Math.round(recipe.calories * 0.03)}g`,
+  } : null);
 
   return (
     <article className="card">
@@ -52,6 +57,16 @@ export default function RecipeCard({ recipe, diet, saved, mode = 'explore', onTo
           </span>
           {d && <span className="diet-tag">🌿 {d}</span>}
         </div>
+
+        {macros && (
+          <div className="card-macros" aria-label="Nutritional macros">
+            <span title="Protein">🍗 {macros.protein}</span>
+            <span className="macro-dot">·</span>
+            <span title="Carbohydrates">🍞 {macros.carbs}</span>
+            <span className="macro-dot">·</span>
+            <span title="Fats">🥑 {macros.fats}</span>
+          </div>
+        )}
 
         <p className="card-desc">{desc}</p>
 

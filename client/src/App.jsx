@@ -18,7 +18,9 @@ import {
 const sameQ = (a, b) =>
   a.ingredients.join() === b.ingredients.join() &&
   a.diet === b.diet &&
-  a.servings === b.servings;
+  a.servings === b.servings &&
+  (a.mealType || 'any') === (b.mealType || 'any') &&
+  (a.maxTime || 'any') === (b.maxTime || 'any');
 
 export default function App() {
   // Main landing is 'home', and persists in localStorage on refresh
@@ -110,6 +112,8 @@ export default function App() {
             history={history}
             onSubmit={run}
             onPickHistory={(h) => run(h)}
+            onScanFridge={api.scanFridge}
+            scanning={api.scanning}
           />
         )}
 

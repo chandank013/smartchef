@@ -7,6 +7,8 @@ import ExploreHero from './components/ExploreHero';
 import FavoritesHero from './components/FavoritesHero';
 import RecipeCard from './components/RecipeCard';
 import RecipeDetails from './components/RecipeDetails';
+import CookMode from './components/CookMode';
+import GroceryDrawer from './components/GroceryDrawer';
 import { Empty, Loading, ErrorState } from './components/States';
 import {
   keyOf,
@@ -19,10 +21,14 @@ const sameQ = (a, b) =>
   a.servings === b.servings;
 
 export default function App() {
-  const [view, setView] = useState('results'); // Explore view
+  // Main landing is 'home', and persists in localStorage on refresh
+  const [view, setView] = useLocalStorage('sc:view', 'home');
   const [search, setSearch] = useLocalStorage('sc:search', null); // { query, recipes }
   const [history, setHistory] = useLocalStorage('sc:history', []); // last 5 searches
   const [favs, setFavs] = useLocalStorage('sc:favorites', []);
+  const [groceries, setGroceries] = useLocalStorage('sc:grocery', []);
+  const [groceryOpen, setGroceryOpen] = useState(false);
+  const [cookRecipe, setCookRecipe] = useState(null);
   const [req, setReq] = useState(null);
   const [open, setOpen] = useState(null);
   const api = useRecipeApi();
@@ -46,39 +52,68 @@ export default function App() {
         : [{ ...r, diet, servings }, ...f]
     );
 
+  // Smart Grocery List operations
+  const addGroceryItems = (newItems) => {
+    setGroceries((prev) => {
+      const existingNames = new Set(prev.map((p) => p.name.toLowerCase()));
+      const filtered = newItems.filter((i) => !existingNames.has(i.name.toLowerCase()));
+      const mapped = (filtered.length ? filtered : newItems).map((i) => ({
+        id: `${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
+        name: i.name,
+        quantity: i.quantity,
+        recipeTitle: i.recipeTitle,
+        checked: false,
+      }));
+      return [...prev, ...mapped];
+    });
+  };
+
+  const toggleGroceryItem = (id) => {
+    setGroceries((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, checked: !i.checked } : i))
+    );
+  };
+
+  const removeGroceryItem = (id) => {
+    setGroceries((prev) => prev.filter((i) => i.id !== id));
+  };
+
+  const clearGroceries = () => {
+    setGroceries([]);
+  };
+
   const q = req || search?.query;
 
-  // Combine any AI-generated recipes with the curated explore recipes
+  // Recipe display list for Explore page
   const displayRecipes = useMemo(() => {
-    const aiGenerated = search?.recipes || [];
-    const seen = new Set();
-    const combined = [];
-    for (const r of [...aiGenerated, ...CURATED_EXPLORE_RECIPES]) {
-      const k = keyOf(r);
-      if (!seen.has(k)) {
-        seen.add(k);
-        combined.push(r);
-      }
+    if (search?.recipes && search.recipes.length) {
+      return search.recipes;
     }
-    return combined;
+    return CURATED_EXPLORE_RECIPES;
   }, [search]);
 
   return (
     <>
-      <Header view={view} setView={setView} favCount={favs.length} />
+      <Header
+        view={view}
+        setView={setView}
+        favCount={favs.length}
+        groceryCount={groceries.filter((g) => !g.checked).length}
+        onOpenGrocery={() => setGroceryOpen(true)}
+      />
+
       <main className="wrap">
         {/* 1. Home View */}
         {view === 'home' && (
           <IngredientForm
-            initial={q}
+            loading={api.loading}
             history={history}
-            busy={api.loading}
             onSubmit={run}
-            onPick={run}
+            onPickHistory={(h) => run(h)}
           />
         )}
 
-        {/* 2. Explore Page (Hero + Recipe Cards) */}
+        {/* 2. Explore / Recipe Results View */}
         {view === 'results' && (
           <section aria-label="Explore Recipes">
             <ExploreHero />
@@ -86,23 +121,12 @@ export default function App() {
             {api.loading ? (
               <Loading />
             ) : api.error ? (
-              <ErrorState
-                message={api.error}
-                onRetry={() => (req ? run(req) : null)}
-                onBack={() => setView('home')}
-              />
-            ) : !displayRecipes.length ? (
-              <Empty
-                title="No recipes found"
-                text="Enter your ingredients on Home and let SmartChef suggest delicious recipes for you."
-                action="Find Recipes"
-                onAction={() => setView('home')}
-              />
+              <ErrorState message={api.error} onRetry={() => q && run(q)} />
             ) : (
               <div className="explore-grid">
                 {displayRecipes.map((r) => {
-                  const dietType = r.diet || (search?.query?.diet) || 'any';
-                  const srv = r.servings || (search?.query?.servings) || 2;
+                  const dietType = r.diet || search?.query?.diet || 'any';
+                  const srv = Number(r.servings || search?.query?.servings) || 2;
                   return (
                     <RecipeCard
                       key={keyOf(r)}
@@ -172,8 +196,32 @@ export default function App() {
           saved={isSaved(open.recipe)}
           onToggle={() => toggle(open.recipe, open.diet, open.servings)}
           onClose={close}
+          onCook={(rec) => {
+            setCookRecipe({ recipe: rec, servings: open.servings });
+            close();
+          }}
+          onAddGrocery={addGroceryItems}
         />
       )}
+
+      {/* Fullscreen Interactive Cook Mode */}
+      {cookRecipe && (
+        <CookMode
+          recipe={cookRecipe.recipe}
+          servings={cookRecipe.servings}
+          onClose={() => setCookRecipe(null)}
+        />
+      )}
+
+      {/* Smart Grocery / Shopping List Drawer */}
+      <GroceryDrawer
+        isOpen={groceryOpen}
+        onClose={() => setGroceryOpen(false)}
+        items={groceries}
+        onToggleItem={toggleGroceryItem}
+        onRemoveItem={removeGroceryItem}
+        onClearAll={clearGroceries}
+      />
     </>
   );
 }

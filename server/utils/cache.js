@@ -4,9 +4,9 @@ import crypto from 'crypto';
 // In-memory only: a cost/performance optimisation, NOT a database. Resets on restart.
 const cache = new NodeCache({ stdTTL: Number(process.env.CACHE_TTL_SECONDS) || 600, checkperiod: 120, useClones: false });
 
-export const makeKey = ({ ingredients, diet, servings }) =>
+export const makeKey = ({ ingredients, diet, servings, mealType = 'any', maxTime = 'any' }) =>
   crypto.createHash('sha256')
-    .update(`${ingredients.map((s) => s.toLowerCase()).sort().join(',')}|${diet}|${servings}`)
+    .update(`${ingredients.map((s) => s.toLowerCase()).sort().join(',')}|${diet}|${servings}|${mealType}|${maxTime}`)
     .digest('hex');
 
 export const getCached = (key) => cache.get(key);

@@ -11,9 +11,9 @@ const origins = process.env.CLIENT_ORIGIN
 
 app.set('trust proxy', 1); // correct client IP for rate limiting behind Render/Railway
 app.use(cors({ origin: origins }));
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '10mb' })); // Support base64 image uploads for Fridge Vision Scan
 
-app.get('/', (_req, res) => res.json({ name: 'SmartChef API', status: 'running', endpoints: ['/api/health', '/api/generate-recipe'] }));
+app.get('/', (_req, res) => res.json({ name: 'SmartChef API', status: 'running', endpoints: ['/api/health', '/api/generate-recipe', '/api/scan-fridge'] }));
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', recipeRoutes);
 app.use('/api', (_req, res) => res.status(404).json({ success: false, error: 'Not found.' }));

@@ -1,11 +1,13 @@
 const DIETS = ['any', 'vegetarian', 'vegan', 'gluten-free', 'keto'];
+const MEAL_TYPES = ['any', 'breakfast', 'lunch', 'dinner', 'snack'];
+const MAX_TIMES = ['any', '20', '45', '60'];
 
 // Strips characters that could be used to break out of the prompt template.
 const clean = (s) => s.replace(/[<>{}`$\\\u0000-\u001f]/g, ' ').replace(/\s+/g, ' ').trim();
 
 // Sanitizes and validates ingredient lists from both Home and Explore search bars
 export default function validateInput(req, res, next) {
-  const { ingredients, diet = 'any', servings = 2 } = req.body || {};
+  const { ingredients, diet = 'any', servings = 2, mealType = 'any', maxTime = 'any' } = req.body || {};
   const fail = (msg) => res.status(400).json({ success: false, error: msg });
 
   if (!Array.isArray(ingredients)) return fail('Ingredients must be a list.');
@@ -17,6 +19,9 @@ export default function validateInput(req, res, next) {
   const n = Number(servings);
   if (!Number.isInteger(n) || n < 1 || n > 8) return fail('Servings must be a whole number from 1 to 8.');
 
-  req.recipeRequest = { ingredients: list, diet, servings: n };
+  const validatedMeal = MEAL_TYPES.includes(mealType) ? mealType : 'any';
+  const validatedTime = MAX_TIMES.includes(String(maxTime)) ? String(maxTime) : 'any';
+
+  req.recipeRequest = { ingredients: list, diet, servings: n, mealType: validatedMeal, maxTime: validatedTime };
   next();
 }

@@ -102,6 +102,8 @@ export default function App() {
         favCount={favs.length}
         groceryCount={groceries.filter((g) => !g.checked).length}
         onOpenGrocery={() => setGroceryOpen(true)}
+        groceryOpen={groceryOpen}
+        isLoading={api.loading}
       />
 
       <main className="wrap">
@@ -120,13 +122,15 @@ export default function App() {
         {/* 2. Explore / Recipe Results View */}
         {view === 'results' && (
           <section aria-label="Explore Recipes">
-            <ExploreHero />
-
             {api.loading ? (
               <Loading />
-            ) : api.error ? (
-              <ErrorState message={api.error} onRetry={() => q && run(q)} />
             ) : (
+              <>
+                <ExploreHero />
+
+                {api.error ? (
+                  <ErrorState message={api.error} onRetry={() => q && run(q)} />
+                ) : (
               <div className="explore-grid">
                 {displayRecipes.map((r) => {
                   const dietType = r.diet || search?.query?.diet || 'any';
@@ -150,6 +154,8 @@ export default function App() {
                   );
                 })}
               </div>
+                )}
+              </>
             )}
           </section>
         )}
@@ -157,7 +163,7 @@ export default function App() {
         {/* 3. Favorites View */}
         {view === 'favorites' && (
           <section aria-label="Favorite Recipes">
-            <FavoritesHero count={favs.length} />
+            <FavoritesHero />
             {!favs.length ? (
               <Empty
                 icon="❤️"
@@ -225,6 +231,10 @@ export default function App() {
         onToggleItem={toggleGroceryItem}
         onRemoveItem={removeGroceryItem}
         onClearAll={clearGroceries}
+        onExplore={() => {
+          setGroceryOpen(false);
+          setView('results');
+        }}
       />
     </>
   );

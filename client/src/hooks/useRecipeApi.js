@@ -1,8 +1,10 @@
 import { useState, useCallback } from 'react';
 
-const BASE = import.meta.env.VITE_API_URL || '';
-
 // Single place that talks to the backend: POST /api/generate-recipe, POST /api/scan-fridge
+// Trims trailing slash from VITE_API_URL if present to avoid double-slashes
+const rawBase = import.meta.env.VITE_API_URL || '';
+const BASE = rawBase.replace(/\/+$/, '');
+
 export default function useRecipeApi() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

@@ -11,8 +11,13 @@ Enter the ingredients you have, pick a dietary preference and serving size, and 
   - Multi-attribute sort selector (*Most Relevant, Quickest, Lowest Calories, Highest Calories*).
   - Responsive 4-column recipe cards with food photography, calorie/prep-time badges, ingredient icons, and dual action buttons (*View Recipe* & *Save*).
 - **Ingredient AI Generator**: Ingredient input (max 200 characters), dietary filter (Any, Vegetarian, Vegan, Gluten-Free, Keto) and servings (1 to 8).
+- **Interactive "Cook Mode"**: Fullscreen hands-free cooking assistant with large readable typography, step progress bar, auto-detected step countdown timer with Web Audio API chime, and browser text-to-speech voice readout (`window.speechSynthesis`).
+- **Smart Missing-Ingredients & Grocery Checklist**: Interactive checkboxes on recipe ingredients to flag missing items, a dedicated Shopping List drawer, and one-click formatted WhatsApp export (`https://api.whatsapp.com/send?text=...`).
+- **Nutritional Macronutrient Breakdown**: Protein (g), Carbohydrates (g), and Healthy Fats (g) estimated by LLM and displayed via visual macro chips on recipe cards and details.
+- **Kitchen Print-Friendly View & Sharing**: Clean `@media print` stylesheet that strips UI controls for neat single-sheet recipe printing / PDF export, plus instant WhatsApp sharing.
+- **Persistent Landing Page**: Default initial landing on Home page with automatic browser session persistence (`sc:view`) across page reloads.
 - **Recipe Details Modal**: Full ingredient quantities scaled by serving size and numbered step-by-step instructions.
-- **Client Persistence**: Save and remove favorites, plus the five most recent searches (stored in `localStorage`).
+- **Client Persistence**: Save and remove favorites, plus shopping list and search history (stored in `localStorage`).
 - **Responsive Theme System**: Dark forest green and warm light themes with smooth transitions across mobile, tablet, and desktop.
 - **Resilient States**: Designed empty, loading (skeleton screens), error states with retry, and image-fallback states.
 - **Secure Backend Proxy**: LLM (Groq, OpenAI, Gemini, Anthropic) and image API keys never reach the browser.
@@ -41,7 +46,7 @@ smartchef/
 │       ├── main.jsx, App.jsx, lib.js, styles.css
 │       ├── components/        # Header, IngredientForm, ExploreHero,
 │       │                      # FavoritesHero, RecipeCard, RecipeDetails,
-│       │                      # FoodImage, States
+│       │                      # CookMode, GroceryDrawer, FoodImage, States
 │       ├── hooks/             # useLocalStorage, useRecipeApi
 │       └── context/           # ThemeContext
 └── server/                    # Express API

@@ -176,8 +176,15 @@ Errors return `{ "success": false, "error": "message" }`:
 
 ## Deployment
 
-- **Backend (Render, Railway or similar):** set the root to `server`, start command `npm start`, and add the environment variables above in the host's dashboard (never commit `.env`). Set `CLIENT_ORIGIN` to your frontend URL.
-- **Frontend (Netlify or Vercel):** set the root to `client`, build command `npm run build`, publish directory `dist`, and set `VITE_API_URL` to the backend URL.
+- **Backend (Render, Railway or similar):**
+  - Use [`render.yaml`](render.yaml) for zero-config blueprint deployment on Render.
+  - Or manually set root directory to `server`, build command `npm install`, start command `npm start`.
+  - Add environment variables in the host dashboard (`LLM_PROVIDER`, `LLM_API_KEY`, `IMAGE_PROVIDER`, `IMAGE_API_KEY`, `CLIENT_ORIGIN`). Set `CLIENT_ORIGIN` to your Vercel frontend URL.
+- **Frontend (Vercel):**
+  - Deploy directly with Vercel using [`vercel.json`](vercel.json) or [`client/vercel.json`](client/vercel.json).
+  - Framework Preset: `Vite`. Root directory: `client`.
+  - Build command: `npm run build`, output directory: `dist`.
+  - Set Environment Variable: `VITE_API_URL` to your deployed Render backend URL (e.g. `https://smartchef-api.onrender.com`).
 
 ## Troubleshooting
 

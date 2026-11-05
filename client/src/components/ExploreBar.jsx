@@ -51,7 +51,6 @@ export default function ExploreBar({
       {/* 1. Explore Hero Section */}
       <section className="explore-hero">
         <div className="explore-hero-left">
-          <span className="explore-badge">EXPLORE RECIPES</span>
           <h1 className="explore-heading">
             Discover Delicious <span className="highlight-green">Recipes</span>
           </h1>

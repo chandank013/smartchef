@@ -14,7 +14,9 @@ Enter the ingredients you have, pick a dietary preference and serving size, and 
 - **Interactive "Cook Mode"**: Fullscreen hands-free cooking assistant with large readable typography, step progress bar, auto-detected step countdown timer with Web Audio API chime, and browser text-to-speech voice readout (`window.speechSynthesis`).
 - **Smart Missing-Ingredients & Grocery Checklist**: Interactive checkboxes on recipe ingredients to flag missing items, a dedicated Shopping List drawer, and one-click formatted WhatsApp export (`https://api.whatsapp.com/send?text=...`).
 - **Nutritional Macronutrient Breakdown**: Protein (g), Carbohydrates (g), and Healthy Fats (g) estimated by LLM and displayed via visual macro chips on recipe cards and details.
-- **Kitchen Print-Friendly View & Sharing**: Clean `@media print` stylesheet that strips UI controls for neat single-sheet recipe printing / PDF export, plus instant WhatsApp sharing.
+- **Fridge Photo Scanner (Vision AI)**: Snap a photo or upload an image of your fridge or pantry; Multimodal Vision AI automatically detects ingredients and populates your recipe input.
+- **Additional Smart Filters**: Quick filter chips for Meal Type (*Breakfast, Lunch, Dinner, Snack*) and Maximum Cooking Time (*Quick < 20 mins, Normal < 45 mins*).
+- **Kitchen Print-Friendly View & Sharing**: Clean `@media print` stylesheet that strips UI controls for neat single-sheet recipe printing / PDF export without blank pages, plus instant WhatsApp sharing.
 - **Persistent Landing Page**: Default initial landing on Home page with automatic browser session persistence (`sc:view`) across page reloads.
 - **Recipe Details Modal**: Full ingredient quantities scaled by serving size and numbered step-by-step instructions.
 - **Client Persistence**: Save and remove favorites, plus shopping list and search history (stored in `localStorage`).
@@ -52,7 +54,7 @@ smartchef/
 └── server/                    # Express API
     ├── server.js              # entry point, CORS, error handler
     ├── routes/recipe.js       # POST /api/generate-recipe
-    ├── services/              # llmService.js, imageService.js
+    ├── services/              # llmService.js, imageService.js, visionService.js
     ├── middleware/            # validateInput.js, rateLimiter.js
     ├── utils/cache.js         # in-memory TTL cache
     └── .env.example
